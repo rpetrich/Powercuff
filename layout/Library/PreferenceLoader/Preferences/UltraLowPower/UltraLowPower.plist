@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>title</key>
+	<string>UltraLowPower</string>
+	<key>entry</key>
+	<dict>
+		<key>cell</key>
+		<string>PSLinkCell</string>
+		<key>icon</key>
+		<string>/Library/PreferenceLoader/Preferences/UltraLowPower/UltraLowPower.png</string>
+		<key>label</key>
+		<string>UltraLowPower</string>
+	</dict>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>© 2020 Ryan Petrich</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkListCell</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>defaults</key>
+			<string>com.rpetrich.ultralowpower</string>
+			<key>detail</key>
+			<string>PSListItemsController</string>
+			<key>key</key>
+			<string>PowerMode</string>
+			<key>label</key>
+			<string>Throttling</string>
+			<key>validTitles</key>
+			<array>
+				<string>None</string>
+				<string>Nominal</string>
+				<string>Light</string>
+				<string>Moderate</string>
+				<string>Heavy</string>
+			</array>
+			<key>validValues</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>3</integer>
+				<integer>4</integer>
+			</array>
+			<key>PostNotification</key>
+			<string>com.rpetrich.ultralowpower.settingschanged</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.rpetrich.ultralowpower</string>
+			<key>key</key>
+			<string>RequireLowPowerMode</string>
+			<key>label</key>
+			<string>Only in Low Power Mode</string>
+			<key>PostNotification</key>
+			<string>com.rpetrich.ultralowpower.settingschanged</string>
+		</dict>
+	</array>
+</dict>
+</plist>

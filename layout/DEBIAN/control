@@ -1,0 +1,14 @@
+Package: com.rpetrich.ultralowpower
+Section: Tweaks
+Maintainer: BigBoss <bigboss@thebigboss.org>
+Architecture: iphoneos-arm
+Version: 0.1
+Depends: firmware (>= 12.0), mobilesubstrate (>= 0.9.5101), preferenceloader (>= 2.2.2)
+Description: Select from additional low power device states
+Name: UltraLowPower
+Homepage: http://rpetri.ch/cydia/ultralowpower/
+Depiction: http://rpetri.ch/cydia/ultralowpower/
+Author: Ryan Petrich <rpetrich+ultralowpower@gmail.com>
+Sponsor: thebigboss.org <http://thebigboss.org>
+dev: rpetrich
+Tag: purpose::extension
