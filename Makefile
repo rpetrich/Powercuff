@@ -1,7 +1,7 @@
-TWEAK_NAME = UltraLowPower
-UltraLowPower_FILES = UltraLowPower.x
-UltraLowPower_FRAMEWORKS = Foundation
-UltraLowPower_USE_MODULES = false
+TWEAK_NAME = Powercuff
+Powercuff_FILES = Powercuff.x
+Powercuff_FRAMEWORKS = Foundation
+Powercuff_USE_MODULES = false
 
 IPHONE_ARCHS = arm64 arm64e
 

@@ -1,6 +1,5 @@
 #import <Foundation/Foundation.h>
 #import <notify.h>
-#import <os/log.h>
 
 extern char ***_NSGetArgv(void);
 
@@ -13,7 +12,7 @@ static int token;
 
 #if 0
 
-@implementation NSObject(UltraLowPower)
+@implementation NSObject(Powercuff)
 + (id)sharedProduct
 {
 	return currentProduct;
@@ -85,7 +84,7 @@ static void ApplyThermals(void)
 
 static void LoadSettings(void)
 {
-	CFPropertyListRef powerMode = CFPreferencesCopyValue(CFSTR("PowerMode"), CFSTR("com.rpetrich.ultralowpower"), kCFPreferencesCurrentUser, kCFPreferencesCurrentHost);
+	CFPropertyListRef powerMode = CFPreferencesCopyValue(CFSTR("PowerMode"), CFSTR("com.rpetrich.powercuff"), kCFPreferencesCurrentUser, kCFPreferencesCurrentHost);
 	uint64_t thermalMode = 0;
 	if (powerMode) {
 		if ([(id)powerMode isKindOfClass:[NSNumber class]]) {
@@ -93,14 +92,14 @@ static void LoadSettings(void)
 		}
 		CFRelease(powerMode);
 	}
-	CFPropertyListRef requireLowPowerMode = CFPreferencesCopyValue(CFSTR("RequireLowPowerMode"), CFSTR("com.rpetrich.ultralowpower"), kCFPreferencesCurrentUser, kCFPreferencesCurrentHost);
+	CFPropertyListRef requireLowPowerMode = CFPreferencesCopyValue(CFSTR("RequireLowPowerMode"), CFSTR("com.rpetrich.powercuff"), kCFPreferencesCurrentUser, kCFPreferencesCurrentHost);
 	if (requireLowPowerMode && [(id)requireLowPowerMode isKindOfClass:[NSNumber class]] && [(id)requireLowPowerMode boolValue]) {
 		if ([[%c(_CDBatterySaver) batterySaver] getPowerMode] == 0) {
 			thermalMode = 0;
 		}
 	}
 	notify_set_state(token, thermalMode);
-	notify_post("com.rpetrich.ultralowpower.thermals");
+	notify_post("com.rpetrich.powercuff.thermals");
 }
 
 %group SpringBoard
@@ -119,17 +118,16 @@ static void LoadSettings(void)
 
 %ctor
 {
-	notify_register_check("com.rpetrich.ultralowpower.thermals", &token);
+	notify_register_check("com.rpetrich.powercuff.thermals", &token);
 	char *argv0 = **_NSGetArgv();
     char *path = strrchr(argv0, '/');
     path = path == NULL ? argv0 : path + 1;
-    os_log(OS_LOG_DEFAULT, "Loading in %{public}s", path);
     if (strcmp(path, "thermalmonitord") == 0) {
-		CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (void *)ApplyThermals, CFSTR("com.rpetrich.ultralowpower.thermals"), NULL, CFNotificationSuspensionBehaviorCoalesce);
+		CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (void *)ApplyThermals, CFSTR("com.rpetrich.powercuff.thermals"), NULL, CFNotificationSuspensionBehaviorCoalesce);
 		%init(thermalmonitord);
     } else {
 	    CFNotificationCenterRef center = CFNotificationCenterGetDarwinNotifyCenter();
-		CFNotificationCenterAddObserver(center, NULL, (void *)LoadSettings, CFSTR("com.rpetrich.ultralowpower.settingschanged"), NULL, CFNotificationSuspensionBehaviorCoalesce);
+		CFNotificationCenterAddObserver(center, NULL, (void *)LoadSettings, CFSTR("com.rpetrich.powercuff.settingschanged"), NULL, CFNotificationSuspensionBehaviorCoalesce);
 		LoadSettings();
 		%init(SpringBoard);
     }
