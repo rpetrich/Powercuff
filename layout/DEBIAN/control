@@ -2,7 +2,7 @@ Package: com.rpetrich.powercuff
 Section: Tweaks
 Maintainer: BigBoss <bigboss@thebigboss.org>
 Architecture: iphoneos-arm
-Version: 0.1
+Version: 0.2
 Depends: firmware (>= 12.0), mobilesubstrate (>= 0.9.5101), preferenceloader (>= 2.2.2)
 Description: Select from additional low power device states
 Name: Powercuff

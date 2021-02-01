@@ -33,7 +33,39 @@
 			<key>key</key>
 			<string>PowerMode</string>
 			<key>label</key>
-			<string>Throttling</string>
+			<string>Normal Throttling</string>
+			<key>validTitles</key>
+			<array>
+				<string>None</string>
+				<string>Nominal</string>
+				<string>Light</string>
+				<string>Moderate</string>
+				<string>Heavy</string>
+			</array>
+			<key>validValues</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>3</integer>
+				<integer>4</integer>
+			</array>
+			<key>PostNotification</key>
+			<string>com.rpetrich.powercuff.settingschanged</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkListCell</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>defaults</key>
+			<string>com.rpetrich.powercuff</string>
+			<key>detail</key>
+			<string>PSListItemsController</string>
+			<key>key</key>
+			<string>LPMPowerMode</string>
+			<key>label</key>
+			<string>LPM Throttling</string>
 			<key>validTitles</key>
 			<array>
 				<string>None</string>
@@ -61,9 +93,9 @@
 			<key>defaults</key>
 			<string>com.rpetrich.powercuff</string>
 			<key>key</key>
-			<string>RequireLowPowerMode</string>
+			<string>DisableWhileCharging</string>
 			<key>label</key>
-			<string>Only in Low Power Mode</string>
+			<string>Disable While Charging</string>
 			<key>PostNotification</key>
 			<string>com.rpetrich.powercuff.settingschanged</string>
 		</dict>

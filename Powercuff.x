@@ -9,6 +9,7 @@ extern char ***_NSGetArgv(void);
 
 static CommonProduct *currentProduct;
 static int token;
+static bool isCharging;
 
 #if 0
 
@@ -85,18 +86,30 @@ static void ApplyThermals(void)
 static void LoadSettings(void)
 {
 	CFPropertyListRef powerMode = CFPreferencesCopyValue(CFSTR("PowerMode"), CFSTR("com.rpetrich.powercuff"), kCFPreferencesCurrentUser, kCFPreferencesCurrentHost);
+	CFPropertyListRef LPMPowerMode = CFPreferencesCopyValue(CFSTR("LPMPowerMode"), CFSTR("com.rpetrich.powercuff"), kCFPreferencesCurrentUser, kCFPreferencesCurrentHost);
+	CFPropertyListRef disableWhileCharging = CFPreferencesCopyValue(CFSTR("DisableWhileCharging"), CFSTR("com.rpetrich.powercuff"), kCFPreferencesCurrentUser, kCFPreferencesCurrentHost);
 	uint64_t thermalMode = 0;
 	if (powerMode) {
 		if ([(id)powerMode isKindOfClass:[NSNumber class]]) {
-			thermalMode = (uint64_t)[(NSNumber *)powerMode unsignedLongLongValue];
+			if (!isCharging && [(id)disableWhileCharging isKindOfClass:[NSNumber class]] && [(id)disableWhileCharging boolValue]) {
+				thermalMode = (uint64_t)[(NSNumber *)powerMode unsignedLongLongValue];
+			} else {
+				thermalMode = 0;
+			}
 		}
 		CFRelease(powerMode);
 	}
-	CFPropertyListRef requireLowPowerMode = CFPreferencesCopyValue(CFSTR("RequireLowPowerMode"), CFSTR("com.rpetrich.powercuff"), kCFPreferencesCurrentUser, kCFPreferencesCurrentHost);
-	if (requireLowPowerMode && [(id)requireLowPowerMode isKindOfClass:[NSNumber class]] && [(id)requireLowPowerMode boolValue]) {
-		if ([[%c(_CDBatterySaver) batterySaver] getPowerMode] == 0) {
-			thermalMode = 0;
+	if (LPMPowerMode) {
+		if ([(id)LPMPowerMode isKindOfClass:[NSNumber class]]) {
+			if ([[%c(_CDBatterySaver) batterySaver] getPowerMode] != 0) {
+				if (!isCharging && [(id)disableWhileCharging isKindOfClass:[NSNumber class]] && [(id)disableWhileCharging boolValue]) {
+					thermalMode = (uint64_t)[(NSNumber *)LPMPowerMode unsignedLongLongValue];
+				} else {
+					thermalMode = 0;
+				}
+			}
 		}
+		CFRelease(LPMPowerMode);
 	}
 	notify_set_state(token, thermalMode);
 	notify_post("com.rpetrich.powercuff.thermals");
@@ -116,12 +129,29 @@ static void LoadSettings(void)
 
 %end
 
+%group SBUIController
+
+%hook SBUIController
+
+- (BOOL)isOnAC
+{
+	isCharging = %orig();
+	LoadSettings();
+
+	return isCharging;
+}
+
+%end
+
+%end
+
 %ctor
 {
 	notify_register_check("com.rpetrich.powercuff.thermals", &token);
 	char *argv0 = **_NSGetArgv();
     char *path = strrchr(argv0, '/');
     path = path == NULL ? argv0 : path + 1;
+	%init(SBUIController);
     if (strcmp(path, "thermalmonitord") == 0) {
 		CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (void *)ApplyThermals, CFSTR("com.rpetrich.powercuff.thermals"), NULL, CFNotificationSuspensionBehaviorCoalesce);
 		%init(thermalmonitord);
