@@ -67,6 +67,104 @@
 			<key>PostNotification</key>
 			<string>com.rpetrich.powercuff.settingschanged</string>
 		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Disable at any level when connecting charger</string>
+			<key>label</key>
+			<string>Disable when battery level exceeds</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.apple.coreduetd.batterysaver.prefs</string>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<integer>80</integer>
+			<key>defaults</key>
+			<string>com.apple.coreduetd.batterysaver</string>
+			<key>isSegmented</key>
+			<true/>
+			<key>key</key>
+			<string>autoDisableThreshold</string>
+			<key>max</key>
+			<integer>100</integer>
+			<key>min</key>
+			<integer>0</integer>
+			<key>segmentCount</key>
+			<integer>10</integer>
+			<key>showValue</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.apple.coreduetd.batterysaver.prefs</string>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>defaults</key>
+			<string>com.apple.coreduetd.batterysaver</string>
+			<key>key</key>
+			<string>autoDisableWhenPluggedIn</string>
+			<key>label</key>
+			<string>Disable on A/C</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Allow discretionary tasks when on charger and with battery above this level</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.apple.coreduetd.batterysaver.prefs</string>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<integer>30</integer>
+			<key>defaults</key>
+			<string>com.apple.coreduetd.batterysaver</string>
+			<key>isSegmented</key>
+			<true/>
+			<key>key</key>
+			<string>allowDiscretionaryThreshold</string>
+			<key>max</key>
+			<integer>100</integer>
+			<key>min</key>
+			<integer>0</integer>
+			<key>segmentCount</key>
+			<integer>10</integer>
+			<key>showValue</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Backlight reduction percentage</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.apple.coreduetd.batterysaver.prefs</string>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<integer>20</integer>
+			<key>defaults</key>
+			<string>com.apple.coreduetd.batterysaver</string>
+			<key>isSegmented</key>
+			<true/>
+			<key>key</key>
+			<string>backlightReduction</string>
+			<key>max</key>
+			<integer>50</integer>
+			<key>min</key>
+			<real>0.0</real>
+			<key>segmentCount</key>
+			<integer>5</integer>
+			<key>showValue</key>
+			<integer>1</integer>
+		</dict>
 	</array>
 </dict>
 </plist>

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+killall thermalmonitord
+
+rm /var/mobile/Library/Preferences/com.apple.coreduetd.batterysaver.plist
+
+exit 0
